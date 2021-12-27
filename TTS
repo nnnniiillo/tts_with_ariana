@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fa-IR">
+
+<head>
+    <meta charset="utf-8">
+    <title>تبدیل متن به گفتار</title>
+    <style>
+        * {
+            font-family: 'Vazir' !important;
+        }
+
+        body {
+            background-color: purple;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .container input {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            width: 200px;
+            outline: none;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .container input::placeholder {
+            color: #fff;
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        .container a {
+            background-color: orange;
+            border: none;
+            color: #fff;
+            border-radius: 3px;
+            padding: 5px 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <input class="text" type="text" name="text" placeholder="متن خود را وارد کنید">
+        <a href="">ارسال</a>
+    </div>
+
+    <script>
+        let input = document.querySelector("input"),
+            link = document.querySelector("a"),
+            letters, persian;
+
+        link.addEventListener("click", function (e) {
+            let words = input.value;
+            for (let i = 0; i < words.length; i++) {
+                words = words.replace("sh", "ش")
+                words = words.replace("zh", "ژ")
+                words = words.replace("ch", "چ")
+				words = words.replace("kh", "خ")
+				words = words.replace("gh", "ق")
+                words = words.replace("aa", "ا")
+                words = words.replace("aA", "ا")
+                words = words.replace("Aa", "ا")
+                words = words.replace("oo", "و")
+                words = words.replace("Oo", "و")
+                words = words.replace("oO", "و")
+                letters = words.split("");
+                letters.forEach((letter, index) => {
+                    if (index == 0) {
+                        if (letter == "e" || letter == "E") {
+                            letters[0] = "ا"
+                        }
+                    } else if (index == words.length - 1) {
+                        if (letter == "e" || letter == "E") {
+                            letters[index] = "ه"
+                        }
+                    } else {
+                        if (letter == "e" || letter == "E") {
+                            letters[index] = ""
+                        }
+                    }
+
+                    switch (letter) {
+                        case ' ':
+                            letters[index] = ' ';
+                            break;
+                        case 'A':
+                        case 'a':
+                            letters[index] = '';
+                            break;
+                        case 'B':
+                        case 'b':
+                            letters[index] = 'ب';
+                            break;
+                        case 'C':
+                        case 'c':
+                            letters[index] = 'ک';
+                            break;
+                        case 'D':
+                        case 'd':
+                            letters[index] = 'د';
+                            break;
+                        case 'F':
+                        case 'f':
+                            letters[index] = 'ف';
+                            break;
+                        case 'G':
+                        case 'g':
+                            letters[index] = 'گ';
+                            break;
+                        case 'H':
+                        case 'h':
+                            letters[index] = 'ه';
+                            break;
+                        case 'I':
+                        case 'i':
+                            letters[index] = 'ی';
+                            break;
+                        case 'J':
+                        case 'j':
+                            letters[index] = 'ج';
+                            break;
+                        case 'K':
+                        case 'k':
+                            letters[index] = 'ک';
+                            break;
+                        case 'L':
+                        case 'l':
+                            letters[index] = 'ل';
+                            break;
+                        case 'M':
+                        case 'm':
+                            letters[index] = 'م';
+                            break;
+                        case 'N':
+                        case 'n':
+                            letters[index] = 'ن';
+                            break;
+                        case 'O':
+                        case 'o':
+                            letters[index] = '';
+                            break;
+                        case 'P':
+                        case 'p':
+                            letters[index] = 'پ';
+                            break;
+                        case 'Q':
+                        case 'q':
+                            letters[index] = 'ق';
+                            break;
+                        case 'R':
+                        case 'r':
+                            letters[index] = 'ر';
+                            break;
+                        case 'S':
+                        case 's':
+                            letters[index] = 'س';
+                            break;
+                        case 'T':
+                        case 't':
+                            letters[index] = 'ت';
+                            break;
+                        case 'U':
+                        case 'u':
+                            letters[index] = '';
+                            break;
+                        case 'V':
+                        case 'v':
+                            letters[index] = 'و';
+                            break;
+                        case 'W':
+                        case 'w':
+                            letters[index] = '';
+                            break;
+                        case 'X':
+                        case 'x':
+                            letters[index] = 'خ';
+                            break;
+                        case 'Y':
+                        case 'y':
+                            letters[index] = 'ی';
+                            break;
+                        case 'Z':
+                        case 'z':
+                            letters[index] = 'ز';
+                            break;
+                    }
+                });
+            }
+            
+            persian = letters.join("")
+            link.href = `http://api.farsireader.com/ArianaCloudService/ReadTextGET?APIKey=3PTEVFMQ0XVZV98&Text=?${persian}&Speaker=Female1&.containerat=mp3`
+        })
+    </script>
+</body>
+
+</html>
